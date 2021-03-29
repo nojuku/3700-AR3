@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22134E88260FDDE000737397 /* data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22134E87260FDDE000737397 /* data.plist */; };
+		22134E94260FE03500737397 /* ButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22134E8A260FE03300737397 /* ButtonsView.swift */; };
+		22134E95260FE03500737397 /* WalkthroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22134E8B260FE03300737397 /* WalkthroughView.swift */; };
+		22134E96260FE03500737397 /* GotItView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22134E8C260FE03400737397 /* GotItView.swift */; };
+		22134E97260FE03500737397 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22134E8D260FE03400737397 /* GradientView.swift */; };
+		22134E98260FE03500737397 /* PageTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22134E8E260FE03400737397 /* PageTabView.swift */; };
+		22134E99260FE03500737397 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22134E8F260FE03400737397 /* Data.swift */; };
+		22134E9A260FE03500737397 /* TabDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22134E90260FE03500737397 /* TabDetailsView.swift */; };
+		22134E9B260FE03500737397 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22134E91260FE03500737397 /* ContentView.swift */; };
+		22134E9C260FE03500737397 /* ControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22134E92260FE03500737397 /* ControlView.swift */; };
+		22134E9D260FE03500737397 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22134E93260FE03500737397 /* InfoView.swift */; };
+		22134EA0260FE09A00737397 /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 22134E9F260FE09A00737397 /* Experience.rcproject */; };
+		22134EE32611615D00737397 /* testView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22134EE22611615D00737397 /* testView.swift */; };
 		22E893F026053BF6007D458B /* AgeNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 22E893EF26053BF6007D458B /* AgeNet.mlmodel */; };
 		EF7CD64024B608C80011442D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7CD63F24B608C80011442D /* AppDelegate.swift */; };
 		EF7CD64224B608C80011442D /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = EF7CD64124B608C80011442D /* art.scnassets */; };
@@ -17,6 +30,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22134E87260FDDE000737397 /* data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = data.plist; sourceTree = "<group>"; };
+		22134E8A260FE03300737397 /* ButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsView.swift; sourceTree = "<group>"; };
+		22134E8B260FE03300737397 /* WalkthroughView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughView.swift; sourceTree = "<group>"; };
+		22134E8C260FE03400737397 /* GotItView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GotItView.swift; sourceTree = "<group>"; };
+		22134E8D260FE03400737397 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		22134E8E260FE03400737397 /* PageTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTabView.swift; sourceTree = "<group>"; };
+		22134E8F260FE03400737397 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		22134E90260FE03500737397 /* TabDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabDetailsView.swift; sourceTree = "<group>"; };
+		22134E91260FE03500737397 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		22134E92260FE03500737397 /* ControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlView.swift; sourceTree = "<group>"; };
+		22134E93260FE03500737397 /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		22134E9F260FE09A00737397 /* Experience.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = Experience.rcproject; sourceTree = "<group>"; };
+		22134EE22611615D00737397 /* testView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testView.swift; sourceTree = "<group>"; };
 		22E893EF26053BF6007D458B /* AgeNet.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = AgeNet.mlmodel; sourceTree = "<group>"; };
 		EF7CD63C24B608C80011442D /* ARKitVisionObjectDetection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARKitVisionObjectDetection.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF7CD63F24B608C80011442D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -62,10 +88,23 @@
 				EF7CD63F24B608C80011442D /* AppDelegate.swift */,
 				EF7CD64124B608C80011442D /* art.scnassets */,
 				EF7CD64324B608C80011442D /* ViewController.swift */,
+				22134EE22611615D00737397 /* testView.swift */,
 				EF7CD64524B608C80011442D /* Main.storyboard */,
+				22134E9F260FE09A00737397 /* Experience.rcproject */,
+				22134E8A260FE03300737397 /* ButtonsView.swift */,
+				22134E91260FE03500737397 /* ContentView.swift */,
+				22134E92260FE03500737397 /* ControlView.swift */,
+				22134E8F260FE03400737397 /* Data.swift */,
+				22134E8C260FE03400737397 /* GotItView.swift */,
+				22134E8D260FE03400737397 /* GradientView.swift */,
+				22134E93260FE03500737397 /* InfoView.swift */,
+				22134E8E260FE03400737397 /* PageTabView.swift */,
+				22134E90260FE03500737397 /* TabDetailsView.swift */,
+				22134E8B260FE03300737397 /* WalkthroughView.swift */,
 				EF7CD64824B608CD0011442D /* Assets.xcassets */,
 				EF7CD64A24B608CD0011442D /* LaunchScreen.storyboard */,
 				EF7CD64D24B608CD0011442D /* Info.plist */,
+				22134E87260FDDE000737397 /* data.plist */,
 			);
 			path = ARKitVisionObjectDetection;
 			sourceTree = "<group>";
@@ -131,6 +170,7 @@
 				EF7CD64224B608C80011442D /* art.scnassets in Resources */,
 				EF7CD64C24B608CD0011442D /* LaunchScreen.storyboard in Resources */,
 				EF7CD64924B608CD0011442D /* Assets.xcassets in Resources */,
+				22134E88260FDDE000737397 /* data.plist in Resources */,
 				EF7CD64724B608C80011442D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,9 +182,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22134E96260FE03500737397 /* GotItView.swift in Sources */,
+				22134E9B260FE03500737397 /* ContentView.swift in Sources */,
 				EF7CD64424B608C80011442D /* ViewController.swift in Sources */,
 				EF7CD64024B608C80011442D /* AppDelegate.swift in Sources */,
+				22134E9C260FE03500737397 /* ControlView.swift in Sources */,
+				22134E9D260FE03500737397 /* InfoView.swift in Sources */,
+				22134E98260FE03500737397 /* PageTabView.swift in Sources */,
+				22134E94260FE03500737397 /* ButtonsView.swift in Sources */,
+				22134E97260FE03500737397 /* GradientView.swift in Sources */,
+				22134E95260FE03500737397 /* WalkthroughView.swift in Sources */,
+				22134E99260FE03500737397 /* Data.swift in Sources */,
+				22134EE32611615D00737397 /* testView.swift in Sources */,
 				22E893F026053BF6007D458B /* AgeNet.mlmodel in Sources */,
+				22134EA0260FE09A00737397 /* Experience.rcproject in Sources */,
+				22134E9A260FE03500737397 /* TabDetailsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

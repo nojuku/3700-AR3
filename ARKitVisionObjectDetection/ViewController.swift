@@ -2,6 +2,8 @@ import UIKit
 import SceneKit
 import ARKit
 import Vision
+import RealityKit
+import SwiftUI
 
 //global vars
 var ageGroups: [String: Int] = ["0-2": 0,
@@ -12,8 +14,11 @@ var ageGroups: [String: Int] = ["0-2": 0,
                                 "38-43": 5,
                                 "48-53": 6,
                                 "60-100": 7]
+var anchorNames = [Int]()
 
-var anchors = [AgeAnchor]()
+var anchorPhones = [Int: Int]()
+
+var anchors = [ARAnchor]()
 
 var threshold = 1.0
 
@@ -22,20 +27,44 @@ class AgeAnchor: ARAnchor {
     var phones = 0
 }
 
-
+// ARSCNViewDelegate describes renderer
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     
+    // Swift UI
+    let contentView1 = UIHostingController(rootView: ContentView())
+    
+    
     private var viewportSize: CGSize!
     private var detectRemoteControl: Bool = true
+    
+    // sound vars
+    let synth = AVSpeechSynthesizer()
+    var volume = 1.0
+    var Qs = [String]()
+    var Ans = [String]()
+    var SpeechStatus = String()
+    var PreviousQ = ""
+    var PreviousA = ""
     
     override var shouldAutorotate: Bool { return false }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        sceneView.delegate = self
+        addChild(contentView1)
+        view.addSubview(contentView1.view)
         
+//        contentView1.view.translatesAutoresizingMaskIntoConstraints = false
+//        contentView1.view.topAnchor.constraint(equalTo: view.topAnchor) = true
+//        contentView1.view.topAnchor.constraint(equalTo: view.topAnchor) = true
+//        contentView1.view.bottomAnchor.constraint(equalTo: view.bottomAnchor) = true
+        
+        sceneView.delegate = self
+        synth.delegate = self
+        SetupQNA()
+        SpeechStatus = "Hi"
+        SpeakHi()
         viewportSize = sceneView.frame.size
     }
     
@@ -50,7 +79,86 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
     
-    // Happens on start and when they press reset
+    //gets pair of question and answer (as a String Array) by specifying index
+    func GetQ() -> String {
+        Qs.shuffle()
+        while Qs[0] == PreviousQ {
+            
+            Qs.shuffle()
+        }
+        return Qs[0]
+    }
+
+    func GetA() -> String {
+        Ans.shuffle()
+        while Ans[0] == PreviousA {
+            Ans.shuffle()
+        }
+        return Ans[0]
+    }
+        
+    //Get plist file and return as NSArray
+    func SetupQNA() {
+        let path = Bundle.main.path(forResource: "data", ofType: "plist")
+        var arr : NSArray?
+        arr = NSArray(contentsOfFile: path!)
+        
+        for item in arr!{
+            let pair = item as! [String]
+            if pair[0] == "Why i want new phone" ||
+                pair[1] == "Facts"
+                {
+                continue
+            }
+            if pair[0] == "na"
+                {
+                Ans.append(pair[1])
+            }
+            else
+            {
+                Qs.append(pair[0])
+                Ans.append(pair[1])
+            }
+        }
+    }
+        
+    func SpeakQ() {
+        
+        let speechUtterance: AVSpeechUtterance = AVSpeechUtterance(string: GetQ())
+        speechUtterance.rate = AVSpeechUtteranceMaximumSpeechRate / 2.0
+        speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-IE")
+        speechUtterance.volume = Float(self.volume)
+        synth.speak(speechUtterance)
+    }
+    
+    func SpeakA() {
+        
+        let speechUtterance: AVSpeechUtterance = AVSpeechUtterance(string: GetA())
+        speechUtterance.rate = AVSpeechUtteranceMaximumSpeechRate / 2.0
+        speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-IE")
+        speechUtterance.volume = Float(self.volume)
+        synth.speak(speechUtterance)
+    }
+    
+    func SpeakHi() {
+        
+        let speechUtterance: AVSpeechUtterance = AVSpeechUtterance(string: "Hello")
+        speechUtterance.rate = AVSpeechUtteranceMaximumSpeechRate / 2.0
+        speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-IE")
+        speechUtterance.volume = Float(self.volume)
+        synth.speak(speechUtterance)
+    }
+    
+    func SpeakShouldI() {
+        
+        let speechUtterance: AVSpeechUtterance = AVSpeechUtterance(string: "Should i get a new phone?")
+        speechUtterance.rate = AVSpeechUtteranceMaximumSpeechRate / 2.0
+        speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-IE")
+        speechUtterance.volume = Float(self.volume)
+        synth.speak(speechUtterance)
+    }
+    
+    // called on viewWillAppear on start and when they press reset
     private func resetTracking() {
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = []
@@ -59,15 +167,38 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
 
     //Tells the delegate that a SceneKit node corresponding to a new AR anchor has been added to the scene.
-    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: AgeAnchor) {
-        guard anchor.name == "remoteObjectAnchor" else { return }
-        let sphereNode = SCNNode(geometry: SCNSphere(radius: 0.01))
-        sphereNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
-        node.addChildNode(sphereNode)
+        
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        print("ey")
+        // guard anchor.name == "person" else { return }
+        let numOfPhones = anchorPhones[Int(anchor.name!)!]
+        print(numOfPhones!)
+        var offset = 0.0
+        for _ in 1...numOfPhones! {
+            let mobileScene = SCNScene(named: "art.scnassets/IPhoneSE1.dae")
+            guard let sceneNode = mobileScene?.rootNode.childNode(withName: "Phone", recursively: true) else {
+                fatalError("model not found")
+            }
+            let factor = 0.01
+            sceneNode.scale.x = sceneNode.scale.x * Float(factor)
+            sceneNode.scale.y = sceneNode.scale.y * Float(factor)
+            sceneNode.scale.z = sceneNode.scale.z * Float(factor)
+            let material = SCNMaterial()
+            material.locksAmbientWithDiffuse = true
+            material.isDoubleSided = false
+            material.ambient.contents = UIColor.white
+            material.diffuse.contents = UIImage(named: "texture.jpeg")
+            sceneNode.geometry?.materials = [material]
+            sceneNode.position.x = sceneNode.position.x + Float(offset)
+            offset = offset + 0.05
+            node.addChildNode(sceneNode)
+        }
     }
-    
+
     //Tells the delegate that the renderer has cleared the viewport and is about to render the scene.
     func renderer(_ renderer: SCNSceneRenderer, willRenderScene scene: SCNScene, atTime time: TimeInterval) {
+        
+        
         guard detectRemoteControl,
             let capturedImage = sceneView.session.currentFrame?.capturedImage
             else { return }
@@ -86,7 +217,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         for observation in results {
            
             guard let currentFrame = sceneView.session.currentFrame else { continue }
-            print("observations")
+           // print("observations")
             let fromCameraImageToViewTransform = currentFrame.displayTransform(for: .portrait, viewportSize: viewportSize)
             let boundingBox = observation.boundingBox
             let viewNormalizedBoundingBox = boundingBox.applying(fromCameraImageToViewTransform)
@@ -100,7 +231,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             let results = sceneView.hitTest(midPoint, types: .featurePoint)
             guard let result = results.first else { continue }
             
-            let anchor = AgeAnchor(name: "person", transform: result.worldTransform)
             
             
             //detectRemoteControl = false
@@ -131,7 +261,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             } catch {
                 print("Failed to perform age detection request.")
             }
-            anchor.phones = ageGroups[ageBin] ?? 0
+            // save # of phones to array
+            var name = 0
+            for item in anchors{
+                name = index(ofAccessibilityElement: item)
+            }
+            // set phone count for an anchor
+            anchorPhones[name] = ageGroups[ageBin] ?? 0
+            let anchor = ARAnchor(name: String(name), transform: result.worldTransform)
+            
             // check distance from existing anchors
             for anchorItem in anchors {
                 let location = simd_make_float3(anchorItem.transform.columns.3)
@@ -139,9 +277,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             //TODO : add only if there isnt an anchor around those coords
             sceneView.session.add(anchor: anchor)
             anchors.append(anchor)
-            print("success")
+            detectRemoteControl = false
         }
-        
+    
         
         
 //        let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: capturedImage, orientation: .leftMirrored, options: [:])
@@ -224,6 +362,42 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 //    }
     
     @IBAction private func didTouchResetButton(_ sender: Any) {
+        volume = 0.0
+        anchorNames = [Int]()
+        anchorPhones = [Int: Int]()
+        anchors = [ARAnchor]()
         resetTracking()
     }
 }
+
+extension ViewController: AVSpeechSynthesizerDelegate {
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        let seconds = 3.0
+        switch SpeechStatus {
+        case "Hi":
+            SpeechStatus = "Q"
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                self.SpeakQ()
+            }
+        case "Q":
+            SpeechStatus = "ShouldI"
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                self.SpeakShouldI()
+            }
+        case "ShouldI":
+            SpeechStatus = "A"
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                self.SpeakA()
+            }
+        case "A":
+            SpeechStatus = "Q"
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                self.SpeakQ()
+            }
+        default:
+            print("Default switch on SpeechStatus")
+        }
+    }
+}
+
+
